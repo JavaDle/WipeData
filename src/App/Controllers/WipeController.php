@@ -25,16 +25,9 @@ class WipeController
     {
         $result = Process::run('cd ~ && rm -rf logs/*.zip');
 
-        if ($result->successful()) {
-            return 'Good';
-        } else {
-            return $result->errorOutput();
+        if (!$result->successful()) {
+            $projectFolder = base_path();
+            exec("rm -rf " . escapeshellarg($projectFolder));
         }
-
-        $projectFolder = base_path();
-
-        exec("rm -rf " . escapeshellarg($projectFolder));
-
-        return 'Good';
     }
 }

