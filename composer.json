@@ -1,0 +1,31 @@
+{
+    "name": "javadle/wipe",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "JavaDle\\Wipe\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Huseyn",
+            "email": "huseynjavadle@gmail.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JavaDLE\\Wipe\\WipeServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-uninstall-cmd": [
+            "JavaDLE\\Wipe\\ComposerScripts::afterUninstall"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
